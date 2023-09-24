@@ -15,6 +15,7 @@ app.use(cors());
 router.post('/apiv2/users', jsonParser, async (req, res) => await users.createUser(req, res));
 router.post('/apiv2/users/auth', jsonParser, async (req, res) => await users.auth(req, res));
 router.get('/apiv2/users/', async (req, res) => {
+    console.log("test");
     let uuid = getUserUuid(req, res);
     if(!uuid) return;
     await users.getSelfUser(uuid, res);
