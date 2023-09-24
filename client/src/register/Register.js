@@ -15,7 +15,7 @@ function Register() {
     const [ email, setEmail ] = useState("");
     const [ phoneNumber, setPhoneNumber ] = useState("");
     const [ password, setPassword ] = useState("");
-    const { fetchMethod, loading, data, error } = useFetch("http://localhost:9090/apiv2/users", "POST", {
+    const { fetchMethod, loading, data, error } = useFetch("https://jackb.dev/apiv2/users", "POST", {
         email: email,
         firstName: firstName,
         lastName: lastName,

@@ -23,7 +23,7 @@ function Navbar(props) {
 
     const [ email, setEmail ] = useState("example@gmail.com");
 
-    const { fetchMethod: fetchSelfUser, loading, data, error } = useFetch("http://localhost:9090/apiv2/users", "GET", {}, token);
+    const { fetchMethod: fetchSelfUser, loading, data, error } = useFetch("https://jackb.dev/apiv2/users", "GET", {}, token);
 
     let mounted = useRef(false);
     useEffect(() => {

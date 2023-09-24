@@ -23,8 +23,8 @@ function Found() {
     const [ alert, setAlert ] = useState("");
     const handleOpenMessage = () => setOpenMessage(true);
     const handleCloseMessage = () => setOpenMessage(false);
-    const { fetchMethod: fetchItem, loading, data, error } = useFetch("http://localhost:9090/apiv2/items/" + uuid, "GET", {}, token);
-    const { fetchMethod: createNotif, loading: loading2, data: data2, error: error2 } = useFetch("http://localhost:9090/apiv2/notifications", "POST", {
+    const { fetchMethod: fetchItem, loading, data, error } = useFetch("https://jackb.dev/apiv2/items/" + uuid, "GET", {}, token);
+    const { fetchMethod: createNotif, loading: loading2, data: data2, error: error2 } = useFetch("https://jackb.dev/apiv2/notifications", "POST", {
         itemUuid: item.uuid
     }, null);
     
