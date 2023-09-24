@@ -11,7 +11,7 @@ import useFetch from '../hooks/useFetch.js'
 function Login() {
 	const [ email, setEmail ] = useState("");
 	const [ password, setPassword ] = useState("");
-    const { fetchMethod, loading, data, error } = useFetch("https://jackb.dev/apiv2/users/auth", "POST", {
+    const { fetchMethod, loading, data, error } = useFetch("http://localhost:9090/apiv2/users/auth", "POST", {
         email: email,
 		password: password
     }, null);

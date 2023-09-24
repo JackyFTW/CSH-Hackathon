@@ -26,8 +26,8 @@ function Items() {
     const [ message, setMessage ] = useState("");
     const handleOpenCreate = () => setOpenCreate(true);
     const handleCloseCreate = () => setOpenCreate(false);
-    const { fetchMethod: fetchItems, loading, data, error } = useFetch("https://jackb.dev/apiv2/items", "GET", {}, token);
-    const { fetchMethod: createItem, loading: loading2, data: data2, error: error2 } = useFetch("https://jackb.dev/apiv2/items", "POST", {
+    const { fetchMethod: fetchItems, loading, data, error } = useFetch("http://localhost:9090/apiv2/items", "GET", {}, token);
+    const { fetchMethod: createItem, loading: loading2, data: data2, error: error2 } = useFetch("http://localhost:9090/apiv2/items", "POST", {
         name: name,
         message: message,
         status: 0

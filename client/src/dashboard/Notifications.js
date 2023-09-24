@@ -15,7 +15,7 @@ function Notifications() {
     let token = localStorage.getItem("token");
 
     const [ rows, setRows ] = useState([]);
-    const { fetchMethod: fetchNotifs, loading, data, error } = useFetch("https://jackb.dev/apiv2/notifications", "GET", {}, token);
+    const { fetchMethod: fetchNotifs, loading, data, error } = useFetch("http://localhost:9090/apiv2/notifications", "GET", {}, token);
 
     let mounted = useRef(false);
     useEffect(() => {
@@ -47,7 +47,7 @@ function Notifications() {
                 };
                 options.headers["Content-Type"] = "application/json";
                 options.headers["Authorization"] = "Basic " + token;
-                fetch("https://jackb.dev/apiv2/notifications/" + r.uuid, options).then(data => 
+                fetch("http://localhost:9090/apiv2/notifications/" + r.uuid, options).then(data => 
                     data.json().then(json => {
                         console.log(json); 
                     }));

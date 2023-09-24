@@ -13,7 +13,6 @@ import LinearProgress from '@mui/joy/LinearProgress';
 import Alert from '@mui/joy/Alert';
 import Check from '@mui/icons-material/Check';
 
-
 function Found() {
     let token = localStorage.getItem("token");
     let { uuid } = useParams([]);
@@ -23,8 +22,8 @@ function Found() {
     const [ alert, setAlert ] = useState("");
     const handleOpenMessage = () => setOpenMessage(true);
     const handleCloseMessage = () => setOpenMessage(false);
-    const { fetchMethod: fetchItem, loading, data, error } = useFetch("https://jackb.dev/apiv2/items/" + uuid, "GET", {}, token);
-    const { fetchMethod: createNotif, loading: loading2, data: data2, error: error2 } = useFetch("https://jackb.dev/apiv2/notifications", "POST", {
+    const { fetchMethod: fetchItem, loading, data, error } = useFetch("http://localhost:9090/apiv2/items/" + uuid, "GET", {}, token);
+    const { fetchMethod: createNotif, loading: loading2, data: data2, error: error2 } = useFetch("http://localhost:9090/apiv2/notifications", "POST", {
         itemUuid: item.uuid
     }, null);
     
@@ -231,8 +230,10 @@ function Found() {
                                 display: 'flex',
                                 width: '95%',
                                 height: '100%',
-                                fontSize: 40,
+                                fontSize: 30,
                                 m: 'auto',
+                                pt: 10,
+                                pb: 10,
                                 fontWeight: 'bold',
                                 textAlign: 'center',
                                 alignItems: 'center'
