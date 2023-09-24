@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const db = require('./db.js')
 const users = require('./api/users.js');
 const items = require('./api/items.js');
@@ -8,12 +7,11 @@ const notifs = require('./api/notifications.js');
 
 const app = express();
 const jsonParser = bodyParser.json();
-//app.use(cors());
 
 // Users Endpoint
 app.post('/apiv2/users', jsonParser, async (req, res) => await users.createUser(req, res));
 app.post('/apiv2/users/auth', jsonParser, async (req, res) => await users.auth(req, res));
-app.get('/apiv2/users', async (req, res) => {
+app.get('/users', async (req, res) => {
     let uuid = getUserUuid(req, res);
     if(!uuid) return;
     await users.getSelfUser(uuid, res);
