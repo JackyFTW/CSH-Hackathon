@@ -13,10 +13,10 @@ function Login() {
             sx={{
                 width: 600,
                 height: 400,
-                mx: 'auto', // margin left & right
-                my: 10, // margin top & bottom
-                py: 3, // padding top & bottom
-                px: 3, // padding left & right
+                mx: 'auto',
+                my: 10,
+                py: 3,
+                px: 3,
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 2,

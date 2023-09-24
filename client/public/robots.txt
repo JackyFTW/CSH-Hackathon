@@ -1,5 +1,0 @@
-# https://www.robotstxt.org/robotstxt.html
-User-agent: *
-Disallow:
-
-Robots in the sky??? That's just like that dream I had about robots in the sky!

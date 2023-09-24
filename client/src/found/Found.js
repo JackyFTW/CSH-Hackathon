@@ -10,14 +10,17 @@ function Found() {
     console.log(uuid);
 
     const name = "Garden Hose";
-    const lost = false;
+    const lost = true;
     let content;
     
     if (lost) {
-        content = <div>
+        content = <div style={{
+            display: 'flex',
+            flexDirection: 'column'
+        }}>
             <Sheet variant="soft" color="neutral" sx={{
                 width: '95%',
-                height: 200,
+                height: '50%',
                 display: 'flex',
                 borderRadius: 'lg',
                 boxShadow: 'lg',
@@ -27,7 +30,7 @@ function Found() {
                 <Typography sx={{
                     width: '100%',
                     height: '100%',
-                    fontSize: 50,
+                    fontSize: 35,
                     p: 3,
                     fontWeight: 'bold',
                     textAlign: 'center'
@@ -39,7 +42,7 @@ function Found() {
             <Button variant="outlined" color="neutral" sx={{ 
                 mx: 'auto',
                 mb: 1,
-                width: 400,
+                width: 300,
                 height: 100,
                 fontSize: 35
                 }}>Show Message
@@ -48,7 +51,7 @@ function Found() {
             <Button sx={{ 
                 mx: 'auto',
                 mb: 1,
-                width: 400,
+                width: 300,
                 height: 100,
                 fontSize: 35
                 }}>Contact Owner
@@ -59,10 +62,11 @@ function Found() {
         content = <div>
             <Sheet variant="soft" color="neutral" sx={{
                 width: '95%',
-                height: 250,
+                height: '75%',
                 borderRadius: 'lg',
                 boxShadow: 'lg',
                 mx: 'auto',
+                mb: 4
             }}>
                 <Typography sx={{
                     display: 'flex',
@@ -83,12 +87,9 @@ function Found() {
     return (
         <Sheet
             sx={{
-                width: 600,
-                height: 800,
-                mx: 'auto', // margin left & right
-                my: 10, // margin top & bottom
-                py: 3, // padding top & bottom
-                px: 3, // padding left & right
+                mx: 2, 
+                my: 6, 
+                py: 3, 
                 display: 'flex',
                 flexDirection: 'column',
                 gap: 2,
@@ -98,7 +99,7 @@ function Found() {
             variant="outlined"
         >
             <div style={{
-                width: '65%',
+                width: '85%',
                 aspectRatio: '2374/414',
                 marginLeft: 'auto',
                 marginRight: 'auto'
@@ -132,12 +133,14 @@ function Found() {
             <Typography
                 endDecorator={<Link href="/register">Sign up</Link>}
                 fontSize="sm"
-                sx={{ 
+                sx={{
+                    position: 'absolute',
                     alignSelf: 'center',
+                    bottom: '1%'
                 }}
             >
             Don&apos;t have an account?
-          </Typography>
+        </Typography>
         </Sheet>
     );
 }

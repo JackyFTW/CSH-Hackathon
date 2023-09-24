@@ -19,7 +19,7 @@ function Navbar(props) {
                 sx={{
                 position: 'sticky',
                 zIndex: 9999,
-                width: '250px',
+                width: '350px',
                 height: '100%',
                 top: 0,
                 flexShrink: 0,

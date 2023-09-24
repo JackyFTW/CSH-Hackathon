@@ -1,17 +1,23 @@
 import Box from '@mui/system/Box'
 import Navbar from '../components/Navbar'
+import Items from './Items'
 
 function Dashboard(props) {
+    let content;
+    if(props.page === "dashboard") {
+        content = <Items/>;
+    } else {
+        content = "";
+    }
+
     return (
         <Box display="flex" minHeight="100vh">
             <Navbar page={ props.page }></Navbar>
             <Box component="main" sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                height: '100vh'
+                height: '100vh',
+                width: '100%',
             }}>
-                <h1>Test</h1>
-                <h2>Test 2</h2>
+                {content}
             </Box>
         </Box>
     )
