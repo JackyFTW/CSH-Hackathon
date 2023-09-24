@@ -7,17 +7,19 @@ const items = require('./api/items.js');
 const notifs = require('./api/notifications.js');
 
 const app = express();
+var router = express.Router();
 const jsonParser = bodyParser.json();
 app.use(cors());
 
 // Users Endpoint
-app.post('/apiv2/users', jsonParser, async (req, res) => await users.createUser(req, res));
-app.post('/apiv2/users/auth', jsonParser, async (req, res) => await users.auth(req, res));
-app.get('/apiv2/users/', async (req, res) => {
+router.post('/apiv2/users', jsonParser, async (req, res) => await users.createUser(req, res));
+router.post('/apiv2/users/auth', jsonParser, async (req, res) => await users.auth(req, res));
+router.get('/apiv2/users/', async (req, res) => {
     let uuid = getUserUuid(req, res);
     if(!uuid) return;
     await users.getSelfUser(uuid, res);
 });
+app.use('/', router);
 
 // Items Endpoint
 app.post('/apiv2/items', jsonParser, async (req, res) => {
