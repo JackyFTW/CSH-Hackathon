@@ -8,7 +8,7 @@ const notifs = require('./api/notifications.js');
 
 const app = express();
 const jsonParser = bodyParser.json();
-app.use(cors());
+//app.use(cors());
 
 // Users Endpoint
 app.post('/apiv2/users', jsonParser, async (req, res) => await users.createUser(req, res));
