@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Sheet from '@mui/joy/Sheet';
 import Typography from '@mui/joy/Typography';
 import FormControl from '@mui/joy/FormControl';
@@ -9,6 +9,7 @@ import Grid from '@mui/joy/Grid';
 import useFetch from '../hooks/useFetch.js'
 
 function Register() {
+    const [ tip, setTip ] = useState("Please fill in the information to continue.");
     const [ firstName, setFirstName ] = useState("");
     const [ lastName, setLastName ] = useState("");
     const [ email, setEmail ] = useState("");
@@ -22,6 +23,14 @@ function Register() {
         phoneNumber: phoneNumber
     }, null);
 
+    useEffect(() => {
+        if(data !== null && error === null) {
+            window.location.href = "/";
+        } else if(error !== null) {
+            setTip(error.error);
+        }
+    }, [loading, data, error]);
+
     function handleSubmit(e) {
         e.preventDefault();
         fetchMethod();
@@ -31,7 +40,6 @@ function Register() {
         <Sheet 
             sx={{
                 width: 600,
-                height: 500,
                 mx: 'auto', // margin left & right
                 my: 10, // margin top & bottom
                 py: 3, // padding top & bottom
@@ -57,7 +65,7 @@ function Register() {
                     mb: 3,
                     marginLeft: 'auto',
                     marginRight: 'auto'
-                }}>Please fill in the information to continue.</Typography>
+                }}>{tip}</Typography>
 
                 <form onSubmit={(e) => {handleSubmit(e)}}>
                     <Grid container
@@ -147,6 +155,7 @@ function Register() {
                     </Grid>
 
                     <Button type="submit" sx={{ 
+                        display: 'flex',
                         mx: 'auto',
                         my: 1,
                         width: 200,

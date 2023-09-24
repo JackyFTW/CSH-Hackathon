@@ -41,7 +41,7 @@ app.get('/apiv2/items', async (req, res) => {
     await items.getSelfItems(uuid, res);
 });
 app.get('/apiv2/items/:uuid', async (req, res) => {
-    let uuid = getUserUuid(req, res);
+    let uuid = getUserUuid(req, res, false);
     await items.getItem(uuid, req, res);
 });
 
@@ -61,16 +61,16 @@ app.get('/apiv2/notifications', async (req, res) => {
 })
 
 // Global Utils
-function getUserUuid(req, res) {
+function getUserUuid(req, res, error=true) {
     if(req.headers["authorization"] === undefined) {
-        sendUnauthorized(res);
+        if(error) sendUnauthorized(res);
         return false;
     }
 
     let token = req.headers["authorization"].split(" ")[1];
 
     if(token === null || users.accessTokens[token] === undefined) {
-        sendUnauthorized(res);
+        if(error) sendUnauthorized(res);
         return false;
     }
 

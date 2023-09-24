@@ -6,8 +6,16 @@ import ListItem from '@mui/joy/ListItem';
 import ListItemDecorator from '@mui/joy/ListItemDecorator';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemContent from '@mui/joy/ListItemContent';
+import Card from '@mui/material/Card';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/joy/Button';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/joy/Typography';
+
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
 
 import './Navbar.css';
 
@@ -55,6 +63,25 @@ function Navbar(props) {
                         </ListItemButton>
                     </ListItem>
                 </List>
+                <Card>
+                    <Button variant="outlined" sx={{
+                        display: 'flex',
+                        mx: 'auto',
+                        my: 3,
+                        height: 50,
+                        borderRadius: 100
+                    }}>
+                        <AccountCircleIcon style={{
+                            fontSize: 40
+                        }}/>
+                        <Typography sx={{
+                            color: 'black',
+                            margin: 4
+                        }}>
+                            Username
+                        </Typography>
+                    </Button>
+                </Card>
             </Sheet>
         </div>
     );

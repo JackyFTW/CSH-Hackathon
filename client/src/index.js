@@ -8,8 +8,7 @@ import Found from './found/Found';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
+  <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Login/>}/>
         <Route exact path="/register" element={<Register/>}/>
@@ -18,5 +17,4 @@ root.render(
         <Route exact path="/found/:uuid" element={<Found/>}/>
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>
 );

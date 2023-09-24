@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useEffect } from 'react';
 import Sheet from '@mui/joy/Sheet';
 import Typography from '@mui/joy/Typography';
 import FormControl from '@mui/joy/FormControl';
@@ -6,13 +6,32 @@ import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 import Link from '@mui/joy/Link';
+import useFetch from '../hooks/useFetch.js'
 
 function Login() {
+	const [ email, setEmail ] = useState("");
+	const [ password, setPassword ] = useState("");
+    const { fetchMethod, loading, data, error } = useFetch("http://localhost:9090/apiv2/users/auth", "POST", {
+        email: email,
+		password: password
+    }, null);
+
+	useEffect(() => {
+		if(data !== null && error === null) {
+			localStorage.setItem("token", data.accessToken);
+			window.location.href = "/dashboard";
+		}
+	}, [loading, data, error]);
+
+	function handleSubmit(e) {
+		e.preventDefault();
+		fetchMethod();
+	}
+
     return (
         <Sheet
             sx={{
                 width: 600,
-                height: 400,
                 mx: 'auto',
                 my: 10,
                 py: 3,
@@ -23,8 +42,8 @@ function Login() {
                 borderRadius: 'lg',
                 boxShadow: 'md',
             }}
-            variant="outlined"
-        >
+        	variant="outlined"
+		>
             <div style={{
                 width: '65%',
                 aspectRatio: '2374/414',
@@ -36,47 +55,45 @@ function Login() {
                     height: '100%'
                 }}/>
             </div>
-          <FormControl>
-            <FormLabel sx={{
-                fontSize: 'lg'
-            }}>Email</FormLabel>
-            <Input
-              // html input attribute
-              name="email"
-              type="email"
-              placeholder="email@address.horse"
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel sx = {{
-                fontSize: 'lg'
-            }}>Password</FormLabel>
-            <Input
-              // html input attribute
-              name="password"
-              type="password"
-              placeholder="password"
-            />
-          </FormControl>
+			<form onSubmit={(e) => handleSubmit(e)}>
+				<FormControl sx={{ mb: 4 }}>
+            		<FormLabel sx={{fontSize: 'lg'}}>Email</FormLabel>
+            		<Input
+              			name="email"
+              			type="email"
+              			placeholder="example@gmail.com"
+						onChange={(e) => setEmail(e.target.value)}
+            		/>
+          		</FormControl>
+          		<FormControl>
+            		<FormLabel sx = {{fontSize: 'lg'}}>Password</FormLabel>
+            		<Input
+              			name="password"
+              			type="password"
+              			placeholder="Type password..."
+						onChange={(e) => setPassword(e.target.value)}
+            		/>
+          		</FormControl>
 
-          <Button sx={{ 
-            mx: 'auto',
-            my: 1,
-            width: 150,
-            height: 70,
-            fontSize: 'lg'
-            }}>Log in</Button>
+         		<Button type="submit" sx={{ 
+                    display: 'flex',
+            		mx: 'auto',
+            		my: 2,
+            		width: 150,
+            		height: 70,
+            		fontSize: 'lg'
+            	}}>Log in
+                </Button>
 
-          <Typography
-            endDecorator={<Link href="/register">Sign up</Link>}
-            fontSize="sm"
-            sx={{ 
-                alignSelf: 'center',
-                
-            }}
-          >
-            Don&apos;t have an account?
-          </Typography>
+          		<Typography
+            		endDecorator={<Link href="/register">Sign up</Link>}
+            		fontSize="sm"
+            		sx={{ 
+                        display: 'flex',
+                        justifyContent: 'center'
+        			}}>Don&apos;t have an account?
+                </Typography>		
+			</form>
         </Sheet>
     );
 }

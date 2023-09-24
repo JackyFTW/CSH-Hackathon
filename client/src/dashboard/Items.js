@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
 import Button from '@mui/joy/Button';
@@ -9,29 +9,64 @@ import Modal from '@mui/material/Modal';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
-
+import useFetch from '../hooks/useFetch.js';
+import ItemsRow from './ItemsRow.js';
 
 // icons
 import FilterListIcon from '@mui/icons-material/FilterList';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import SearchIcon from '@mui/icons-material/Search';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-
-function createData(name, description, status) {
-    return { name, description, status };
-}
-  
-const rows = [
-    createData('Dog', "brendaaaaaaaaaa", 0),
-    createData('Wallet', "contact ", 0),
-    createData('Horse', "(201)-988-3590 ", 1)
-];
-  
 
 function Items() {
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    let token = localStorage.getItem("token");
+
+    const [ openCreate, setOpenCreate ] = useState(false);
+    const [ rows, setRows ] = useState([]);
+    const [ name, setName ] = useState("");
+    const [ message, setMessage ] = useState("");
+    const handleOpenCreate = () => setOpenCreate(true);
+    const handleCloseCreate = () => setOpenCreate(false);
+    const { fetchMethod: fetchItems, loading, data, error } = useFetch("http://localhost:9090/apiv2/items", "GET", {}, token);
+    const { fetchMethod: createItem, loading: loading2, data: data2, error: error2 } = useFetch("http://localhost:9090/apiv2/items", "POST", {
+        name: name,
+        message: message,
+        status: 0
+    }, token);
+
+    let mounted = useRef(false);
+    useEffect(() => {
+        if(mounted.current) return;
+        fetchItems();
+        mounted.current = true;
+    }, []);
+    useEffect(() => {
+        if(data !== null) {
+            let newRows = [];
+            data.items.forEach(i => {
+                newRows.push({
+                    uuid: i.uuid,
+                    name: i.name,
+                    message: i.message,
+                    status: i.status
+                });
+            });
+            setRows(newRows);
+        }
+    }, [loading, data, error]);
+
+    useEffect(() => {
+        if(mounted.current) return;
+        if(data2 !== null) {
+           window.location.href = "/dashboard";
+        }
+        mounted.current = true;
+    }, [loading2, data2, error2]);
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        mounted.current = false;
+        createItem();
+    }
 
     return <div style={{
         width: '100%',
@@ -56,43 +91,41 @@ function Items() {
         >
             <Typography sx={{
                 fontSize: 50
-            }}>
-                Items
-            </Typography>
-            <Button onClick={handleOpen} sx={{
-                height: 60,
+            }}>Items</Typography>
+            <Button onClick={handleOpenCreate} sx={{
+                height: '75%',
+                my: 'auto',
                 fontSize: 50
             }}>
                 <Typography sx={{
                     fontSize: 15,
                     mx: 1,
                     color: 'white'
-                }}>
-                    Create
-                </Typography>
+                }}>Create</Typography>
                 <AddCircleOutlineIcon height="1" sx={{
                     mx: 1,
                 }}/>
             </Button>
             <Modal
-                open={open}
-                onClose={handleClose}
+                open={openCreate}
+                onClose={handleCloseCreate}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <div style={{ marginLeft: '350px' }}>
+                <div style={{ marginLeft: '350px', pointerEvents: 'none' }}>
                     <Sheet sx={{
                         width: '30vw',
                         mx: 'auto',
                         mt: 10,
                         borderRadius: 10,
-                        pb: 2
+                        pb: 2,
+                        pointerEvents: 'auto'
                     }}>
-                        <form onSubmit={ () => console.log('test') }>
+                        <form onSubmit={ (e) => handleSubmit(e) }>
                             <Typography variant="h1" sx={{
-                                mt: 3,
-                                fontSize: 60,
-                                fontWeight: 'bold',
+                                pt: 2,
+                                fontSize: 40,
+                                color: 'black',
                                 textAlign: 'center'
                             }}>
                                 Create Item
@@ -108,7 +141,8 @@ function Items() {
                                 <Input
                                     name="itemName"
                                     type="itemName"
-                                    placeholder="Ex: 'Garden Hose'"
+                                    placeholder="My Wallet"
+                                    onChange={(e) => setName(e.target.value)}
                                 />
                             </FormControl>
 
@@ -123,7 +157,8 @@ function Items() {
                                 <Input
                                     name="lostMessage"
                                     type="lostMessage"
-                                    placeholder="Ex: 'Call me at (911)'"
+                                    placeholder="Please call me at..."
+                                    onChange={(e) => setMessage(e.target.value)}
                                 />
                             </FormControl>
 
@@ -135,6 +170,7 @@ function Items() {
                                 height: 70,
                                 fontSize: 'lg'
                             }}>Create Item</Button>
+                            
                         </form>
                     </Sheet>
                 </div>
@@ -180,18 +216,18 @@ function Items() {
             mx: 20
         }}>
             <Table 
-            hoverRow 
-            size="lg" 
-            variant="soft"
-            sx = {{
-                borderRadius: 20
-            }}
+                hoverRow 
+                size="lg" 
+                variant="soft"
+                sx = {{
+                    borderRadius: 20
+                }}
             >
             <colgroup>
-                <col width="40%" />
                 <col width="30%" />
-                <col width="25%" />
-                <col width="5%" />
+                <col width="40%" />
+                <col width="20%" />
+                <col width="10%" />
             </colgroup>
                 <thead>
                     <tr style={{
@@ -207,16 +243,7 @@ function Items() {
                     borderRadius: 50
                 }}>
                     {rows.map((row) => (
-                    <tr key={row.name} style={{
-                        textAlign: 'center'
-                    }}>
-                        <td>{row.name}</td>
-                        <td>{row.description}</td>
-                        <td>{row.status}</td>
-                        <td>
-                            <MoreVertIcon/>
-                        </td>
-                    </tr>
+                        <ItemsRow row={row}/>
                     ))}
                 </tbody>
             </Table>

@@ -18,13 +18,16 @@ function useFetch(url, method, body, token) {
     }
 
     const fetchMethod = () => {
+        console.log(options);
         fetch(url, options).then(data => {
             data.json().then(json => {
                 setLoading(false);
                 if(json.error !== undefined) {
+                    setData(null)
                     setError(json);
                 } else {
                     setData(json);
+                    setError(null);
                 }
             });
         });
