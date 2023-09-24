@@ -1,13 +1,14 @@
 import Box from '@mui/system/Box'
 import Navbar from '../components/Navbar'
 import Items from './Items'
+import Notifications from './Notifications'
 
 function Dashboard(props) {
     let content;
     if(props.page === "dashboard") {
         content = <Items/>;
     } else {
-        content = "";
+        content = <Notifications/>;
     }
 
     return (

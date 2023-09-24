@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const db = require('./db.js')
 const users = require('./api/users.js');
 const items = require('./api/items.js');
-
+const notifs = require('./api/notifications.js');
 
 const app = express();
 const jsonParser = bodyParser.json();
@@ -28,6 +28,11 @@ app.patch('/apiv2/items/:uuid', jsonParser, async(req, res) => {
     if(!uuid) return;
     await items.editItem(uuid, req, res);
 });
+app.delete('/apiv2/items/:uuid', async(req, res) => {
+    let uuid = getUserUuid(req, res);
+    if(!uuid) return;
+    await items.deleteItem(uuid, req, res);
+})
 app.get('/apiv2/items', async (req, res) => {
     let uuid = getUserUuid(req, res);
     if(!uuid) return;
@@ -38,20 +43,43 @@ app.get('/apiv2/items/:uuid', async (req, res) => {
     await items.getItem(uuid, req, res);
 });
 
+// Notifications Endpoint
+app.post('/apiv2/notifications', jsonParser, async (req, res) => {
+    await notifs.createNotif(req, res);
+});
+app.patch('/apiv2/notifications/:uuid', jsonParser, async (req, res) => {
+    let uuid = getUserUuid(req, res);
+    if(!uuid) return;
+    await notifs.editNotif(uuid, req, res);
+});
+app.get('/apiv2/notifications', async (req, res) => {
+    let uuid = getUserUuid(req, res);
+    if(!uuid) return;
+    await notifs.getSelfNotifs(uuid, res);
+})
+
 // Global Utils
 function getUserUuid(req, res) {
-    if(req.headers["authorization"] === undefined) return false;
+    if(req.headers["authorization"] === undefined) {
+        sendUnauthorized(res);
+        return false;
+    }
+
     let token = req.headers["authorization"].split(" ")[1];
 
     if(token === null || users.accessTokens[token] === undefined) {
-        res.status(403).json({
-            status: 403,
-            error: "Unauthorized request"
-        });
+        sendUnauthorized(res);
         return false;
     }
 
     return users.accessTokens[token];
+}
+
+function sendUnauthorized(res) {
+    res.status(401).json({
+        status: 401,
+        error: "Unauthorized request"
+    });
 }
 
 // Start REST API

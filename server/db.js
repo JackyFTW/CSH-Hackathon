@@ -8,20 +8,21 @@ async function init() {
 
 async function createTables() {
     await db.run("CREATE TABLE IF NOT EXISTS users (" +
-        "uuid VARCHAR(64) PRIMARY KEY, " +
-        "email VARCHAR(64), " +
+        "uuid VARCHAR(64) PRIMARY KEY," +
+        "email VARCHAR(64)," +
         "json TEXT" +
     ")");
 
     await db.run("CREATE TABLE IF NOT EXISTS items (" +
-        "uuid VARCHAR(64) PRIMARY KEY, " +
-        "user_uuid VARCHAR(64), " +
+        "uuid VARCHAR(64) PRIMARY KEY," +
+        "user_uuid VARCHAR(64)," +
         "json TEXT" +
     ")");
 
     await db.run("CREATE TABLE IF NOT EXISTS notifications (" +
         "uuid VARCHAR(64) PRIMARY KEY, " +
-        "user_uuid VARCHAR(64), " +
+        "user_uuid VARCHAR(64)," +
+        "item_uuid VARCHAR(64), " +
         "json TEXT" +
     ")");
 }
@@ -29,6 +30,10 @@ async function createTables() {
 /*
     Users Calls
 */
+
+async function insertUser(json) {
+    await db.run("INSERT INTO users VALUES (?, ?, ?)", [json.uuid, json.email, JSON.stringify(json)]);
+}
 
 async function getUser(email) {
     let stmt = await db.prepare("SELECT json FROM users WHERE email = ? LIMIT 1", [email]);
@@ -40,10 +45,6 @@ async function getUserByUuid(uuid) {
     let stmt = await db.prepare("SELECT json FROM users WHERE uuid = ? LIMIT 1", [uuid]);
     let row = await stmt.get();
     return JSON.parse(row.json);
-}
-
-async function insertUser(json) {
-    await db.run("INSERT INTO users VALUES (?, ?, ?)", [json.uuid, json.email, JSON.stringify(json)]);
 }
 
 async function userExists(email) {
@@ -60,6 +61,14 @@ async function insertItem(json) {
     await db.run("INSERT INTO items VALUES (?, ?, ?)", [json.uuid, json.userUuid, JSON.stringify(json)]);
 }
 
+async function updateItem(uuid, json) {
+    await db.run("UPDATE items SET json = ? WHERE uuid = ?", [JSON.stringify(json), uuid]);
+}
+
+async function deleteItem(uuid) {
+    await db.run("DELETE FROM items WHERE uuid = ?", [uuid]);
+}
+
 async function getAllItems(userUuid) {
     let items = [];
     await db.each("SELECT json FROM items WHERE user_uuid = ?", [userUuid], row => {
@@ -71,21 +80,48 @@ async function getAllItems(userUuid) {
 async function getItem(uuid) {
     let stmt = await db.prepare("SELECT json FROM items WHERE uuid = ? LIMIT 1", [uuid]);
     let row = await stmt.get();
-    return JSON.parse(row.json);
+    return row === undefined ? null : JSON.parse(row.json);
 }
 
-async function updateItem(uuid, json) {
-    await db.run("UPDATE items SET json = ? WHERE uuid = ?", [JSON.stringify(json), uuid]);
+/*
+    Notifications
+*/
+
+async function insertNotif(json) {
+    await db.run("INSERT INTO notifications VALUES (?, ?, ?, ?)", [json.uuid, json.userUuid, json.itemUuid, JSON.stringify(json)]);
+}
+
+async function updateNotif(uuid, json) {
+    await db.run("UPDATE notifications SET json = ? WHERE uuid = ?", [JSON.stringify(json), uuid]);
+}
+
+async function getAllNotifs(userUuid) {
+    let notifs = [];
+    await db.each("SELECT json FROM notifications WHERE user_uuid = ?", [userUuid], row => {
+        notifs.push(JSON.parse(row.json));
+    });
+    return notifs;
+}
+
+async function getNotif(uuid) {
+    let stmt = await db.prepare("SELECT json FROM notifications WHERE uuid = ? LIMIT 1", [uuid]);
+    let row = await stmt.get();
+    return row === undefined ? null : JSON.parse(row.json);
 }
 
 module.exports = {
     init: init,
+    insertUser: insertUser,
     getUser: getUser,
     getUserByUuid: getUserByUuid,
-    insertUser: insertUser,
     userExists: userExists,
     insertItem: insertItem,
+    updateItem: updateItem,
+    deleteItem: deleteItem,
     getAllItems: getAllItems,
     getItem: getItem,
-    updateItem: updateItem
+    insertNotif: insertNotif,
+    updateNotif: updateNotif,
+    getAllNotifs: getAllNotifs,
+    getNotif: getNotif
 }

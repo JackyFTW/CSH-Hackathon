@@ -17,21 +17,54 @@ async function createItem(uuid, req, res) {
 async function editItem(uuid, req, res) {
     let item = await db.getItem(req.params.uuid);
 
+    if(item === null) {
+        res.status(404).json({
+            status: 404,
+            error: "Item does not exist"
+        });
+        return;
+    }
+
     if(uuid !== item.userUuid) {
-        res.status(403).json({
-            status: 403,
+        res.status(401).json({
+            status: 401,
             error: "Unauthorized request"
         });
         return;
     }
 
-    let newPrimitives = req.body;
-    let newItem = { ...item, ...newPrimitives };
+    let newItem = { ...item, ...req.body };
     await db.updateItem(item.uuid, newItem);
 
     res.status(200).json({
         status: 200,
         message: "Successfully updated item"
+    });
+}
+
+async function deleteItem(uuid, req, res) {
+    let item = await db.getItem(req.params.uuid);
+
+    if(item === null) {
+        res.status(404).json({
+            status: 404,
+            error: "Item does not exist"
+        });
+        return;
+    }
+
+    if(uuid !== item.userUuid) {
+        res.status(401).json({
+            status: 401,
+            error: "Unauthorized request"
+        });
+        return;
+    }
+
+    await db.deleteItem(item.uuid);
+    res.status(200).json({
+        status: 200,
+        message: "Successfully deleted item"
     });
 }
 
@@ -67,6 +100,7 @@ async function getItem(uuid, req, res) {
 module.exports = {
     createItem: createItem,
     editItem: editItem,
+    deleteItem: deleteItem,
     getSelfItems: getSelfItems,
     getItem: getItem
 }
