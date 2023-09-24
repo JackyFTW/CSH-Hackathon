@@ -49,12 +49,12 @@ app.get('/items/:uuid', async (req, res) => {
 app.post('/notifications', jsonParser, async (req, res) => {
     await notifs.createNotif(req, res);
 });
-app.patch('/notifications/:uuid', jsonParser, async (req, res) => {
+app.patch('/apiv2/notifications/:uuid', jsonParser, async (req, res) => {
     let uuid = getUserUuid(req, res);
     if(!uuid) return;
     await notifs.editNotif(uuid, req, res);
 });
-app.get('/notifications', async (req, res) => {
+app.get('/apiv2/notifications', async (req, res) => {
     let uuid = getUserUuid(req, res);
     if(!uuid) return;
     await notifs.getSelfNotifs(uuid, res);
