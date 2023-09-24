@@ -11,7 +11,7 @@ const jsonParser = bodyParser.json();
 app.use(cors());
 
 // Users Endpoint
-app.post('/apiv2/users', jsonParser, async (req, res) => await users.createUser(req, res));
+app.post('/users', jsonParser, async (req, res) => await users.createUser(req, res));
 app.post('/apiv2/users/auth', jsonParser, async (req, res) => await users.auth(req, res));
 app.get('/apiv2/users', async (req, res) => {
     let uuid = getUserUuid(req, res);
