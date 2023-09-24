@@ -1,11 +1,15 @@
-import Stack from '@mui/joy/Stack'
+import { useState } from 'react';
+import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
 import Button from '@mui/joy/Button';
-import Input from '@mui/joy/Input';
 import Table from '@mui/joy/Table';
-import TableCell from '@mui/material/TableCell';
 import Sheet from '@mui/joy/Sheet';
 import InputAdornment from '@mui/material/InputAdornment';
+import Modal from '@mui/material/Modal';
+import FormControl from '@mui/joy/FormControl';
+import FormLabel from '@mui/joy/FormLabel';
+import Input from '@mui/joy/Input';
+
 
 // icons
 import FilterListIcon from '@mui/icons-material/FilterList';
@@ -25,6 +29,10 @@ const rows = [
   
 
 function Items() {
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
     return <div style={{
         width: '100%',
         height: '100%',
@@ -51,7 +59,7 @@ function Items() {
             }}>
                 Items
             </Typography>
-            <Button sx={{
+            <Button onClick={handleOpen} sx={{
                 height: 60,
                 fontSize: 50
             }}>
@@ -66,6 +74,71 @@ function Items() {
                     mx: 1,
                 }}/>
             </Button>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <div style={{ marginLeft: '350px' }}>
+                    <Sheet sx={{
+                        width: '30vw',
+                        mx: 'auto',
+                        mt: 10,
+                        borderRadius: 10,
+                        pb: 2
+                    }}>
+                        <form onSubmit={ () => console.log('test') }>
+                            <Typography variant="h1" sx={{
+                                mt: 3,
+                                fontSize: 60,
+                                fontWeight: 'bold',
+                                textAlign: 'center'
+                            }}>
+                                Create Item
+                            </Typography>
+                            <FormControl sx={{
+                                width: '80%',
+                                mx: 'auto',
+                                my: 3
+                            }}>
+                                <FormLabel sx={{
+                                    fontSize: 'lg'
+                                }}>Item Name</FormLabel>
+                                <Input
+                                    name="itemName"
+                                    type="itemName"
+                                    placeholder="Ex: 'Garden Hose'"
+                                />
+                            </FormControl>
+
+                            <FormControl sx={{
+                                width: '80%',
+                                mx: 'auto',
+                                my: 3
+                            }}>
+                                <FormLabel sx={{
+                                    fontSize: 'lg'
+                                }}>Lost Message</FormLabel>
+                                <Input
+                                    name="lostMessage"
+                                    type="lostMessage"
+                                    placeholder="Ex: 'Call me at (911)'"
+                                />
+                            </FormControl>
+
+                            <Button type="submit" sx={{ 
+                                display: 'flex',
+                                mx: 'auto',
+                                my: 5,
+                                width: 200,
+                                height: 70,
+                                fontSize: 'lg'
+                            }}>Create Item</Button>
+                        </form>
+                    </Sheet>
+                </div>
+            </Modal>
         </Stack>
         <Stack
             direction="row"

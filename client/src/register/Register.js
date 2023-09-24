@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import Sheet from '@mui/joy/Sheet';
 import Typography from '@mui/joy/Typography';
 import FormControl from '@mui/joy/FormControl';
@@ -6,8 +6,27 @@ import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 import Grid from '@mui/joy/Grid';
+import useFetch from '../hooks/useFetch.js'
 
 function Register() {
+    const [ firstName, setFirstName ] = useState("");
+    const [ lastName, setLastName ] = useState("");
+    const [ email, setEmail ] = useState("");
+    const [ phoneNumber, setPhoneNumber ] = useState("");
+    const [ password, setPassword ] = useState("");
+    const { fetchMethod, loading, data, error } = useFetch("http://localhost:9090/apiv2/users", "POST", {
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        password: password,
+        phoneNumber: phoneNumber
+    }, null);
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        fetchMethod();
+    }
+ 
     return (
         <Sheet 
             sx={{
@@ -40,99 +59,101 @@ function Register() {
                     marginRight: 'auto'
                 }}>Please fill in the information to continue.</Typography>
 
-                <Grid
-                    container
-                    rowSpacing={3}
-                    columnSpacing={7}
-                    sx={{ width: '100%' }}
-                    margin='auto'
-                    justifyContent="space-between"
-                >
-                    <Grid>
-                        <FormControl>
-                            <FormLabel sx={{
-                                fontSize: 'lg'
-                            }}>First Name</FormLabel>
-                            <Input
-                                name="firstName"
-                                type="firstName"
-                                placeholder="Frederick"
-                            />
-                        </FormControl>
+                <form onSubmit={(e) => {handleSubmit(e)}}>
+                    <Grid container
+                        rowSpacing={3}
+                        columnSpacing={7}
+                        sx={{ width: '100%' }}
+                        margin='auto'
+                        justifyContent="space-between"
+                    >
+                        <Grid>
+                            <FormControl>
+                                <FormLabel sx={{
+                                    fontSize: 'lg'
+                                }}>First Name</FormLabel>
+                                <Input
+                                    name="firstName"
+                                    type="firstName"
+                                    placeholder="John"
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                />
+                            </FormControl>
+                        </Grid>
+                        <Grid>
+                            <FormControl>
+                                <FormLabel sx={{
+                                    fontSize: 'lg'
+                                }}>Last Name</FormLabel>
+                                <Input
+                                    name="lastName"
+                                    type="lastName"
+                                    placeholder="Smith"
+                                    onChange={(e) => setLastName(e.target.value)}
+                                />
+                            </FormControl>
+                        </Grid>
+                        <Grid>
+                            <FormControl>
+                                <FormLabel sx={{
+                                    fontSize: 'lg'
+                                }}>Email Address</FormLabel>
+                                <Input
+                                    name="email"
+                                    type="email"
+                                    placeholder="example@gmail.com"
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </FormControl>
+                        </Grid>
+                        <Grid>
+                            <FormControl>
+                                <FormLabel sx={{
+                                    fontSize: 'lg'
+                                }}>Phone Number</FormLabel>
+                                <Input
+                                    name="phoneNumber"
+                                    type="phoneNumber"
+                                    placeholder="800-000-0000"
+                                    onChange={(e) => setPhoneNumber(e.target.value)}
+                                />
+                            </FormControl>
+                        </Grid>
+                        <Grid>
+                            <FormControl>
+                                <FormLabel sx={{
+                                    fontSize: 'lg'
+                                }}>Password</FormLabel>
+                                <Input
+                                    name="password"
+                                    type="password"
+                                    placeholder="Type password..."
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </FormControl>
+                        </Grid>
+                        <Grid>
+                            <FormControl>
+                                <FormLabel sx={{
+                                    fontSize: 'lg'
+                                }}>Confirm Password</FormLabel>
+                                <Input
+                                    name="passwordConfirm"
+                                    type="password"
+                                    placeholder="Confirm password..."
+                                />
+                            </FormControl>
+                        </Grid>
                     </Grid>
-                    <Grid>
-                        <FormControl>
-                            <FormLabel sx={{
-                                fontSize: 'lg'
-                            }}>Last Name</FormLabel>
-                            <Input
-                                name="lastName"
-                                type="lastName"
-                                placeholder="Baptiste"
-                            />
-                        </FormControl>
-                    </Grid>
-                    <Grid>
-                        <FormControl>
-                            <FormLabel sx={{
-                                fontSize: 'lg'
-                            }}>Email Address</FormLabel>
-                            <Input
-                                name="email"
-                                type="email"
-                                placeholder="email@address.horse"
-                            />
-                        </FormControl>
-                    </Grid>
-                    <Grid>
-                        <FormControl>
-                            <FormLabel sx={{
-                                fontSize: 'lg'
-                            }}>Phone Number</FormLabel>
-                            <Input
-                                name="phoneNumber"
-                                type="phoneNumber"
-                                placeholder="911"
-                            />
-                        </FormControl>
-                    </Grid>
-                    <Grid>
-                        <FormControl>
-                            <FormLabel sx={{
-                                fontSize: 'lg'
-                            }}>Password</FormLabel>
-                            <Input
-                                name="password"
-                                type="password"
-                                placeholder="123456789"
-                            />
-                        </FormControl>
-                    </Grid>
-                    <Grid>
-                        <FormControl>
-                            <FormLabel sx={{
-                                fontSize: 'lg'
-                            }}>Confirm Password</FormLabel>
-                            <Input
-                                name="passwordConfirm"
-                                type="passwordConfirm"
-                                placeholder="123456789"
-                            />
-                        </FormControl>
-                    </Grid>
-                </Grid>
 
-                
-
-
-
-                <Button sx={{ 
-                    mx: 'auto',
-                    my: 1,
-                    width: 200,
-                    height: 70,
-                    fontSize: 'lg'
-                }}>Create Account</Button>
+                    <Button type="submit" sx={{ 
+                        mx: 'auto',
+                        my: 1,
+                        width: 200,
+                        height: 70,
+                        fontSize: 'lg'
+                    }}>Create Account</Button>
+                </form>
         </Sheet>
     );
 }

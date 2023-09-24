@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const db = require('./db.js')
 const users = require('./api/users.js');
 const items = require('./api/items.js');
@@ -7,6 +8,7 @@ const notifs = require('./api/notifications.js');
 
 const app = express();
 const jsonParser = bodyParser.json();
+app.use(cors());
 
 // Users Endpoint
 app.post('/apiv2/users', jsonParser, async (req, res) => await users.createUser(req, res));

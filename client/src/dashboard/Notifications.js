@@ -1,15 +1,13 @@
-import Stack from '@mui/joy/Stack'
+import Stack from '@mui/joy/Stack';
 import Typography from '@mui/joy/Typography';
 import Button from '@mui/joy/Button';
-import Input from '@mui/joy/Input';
 import Table from '@mui/joy/Table';
-import TableCell from '@mui/material/TableCell';
 import Sheet from '@mui/joy/Sheet';
+import Input from '@mui/joy/Input';
 import InputAdornment from '@mui/material/InputAdornment';
 
 // icons
 import FilterListIcon from '@mui/icons-material/FilterList';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
@@ -117,7 +115,14 @@ function Notifications() {
                         <td>{row.message}</td>
                         <td>{row.status}</td>
                         <td>
-                            <MoreVertIcon/>
+                            <Button variant="soft" sx={{
+                                borderRadius: 0,
+                                mx: 0,
+                                px: 0
+                            }}>
+                                <MoreVertIcon/>
+                            </Button>
+                            
                         </td>
                     </tr>
                     ))}
