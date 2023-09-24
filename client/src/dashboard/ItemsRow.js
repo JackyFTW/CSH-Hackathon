@@ -22,6 +22,7 @@ function ItemsRow(props) {
 
     const [ name, setName ] = useState("");
     const [ message, setMessage ] = useState("");
+    const [ status, setStatus ] = useState(row.status);
     const [ openManage, setOpenManage ] = useState(false);
     const [ openQR, setOpenQR ] = useState(false);
     const handleOpenManage = () => setOpenManage(true);
@@ -43,8 +44,21 @@ function ItemsRow(props) {
         mounted.current = true;
     }, [loading, data, error, loading2, data2, error2]);
 
-    function handleSetStatus() {
-
+    function handleSetStatus(status) {
+        let options = { 
+            method: "PATCH",
+            headers: {},
+            body: JSON.stringify({
+                status: status
+            })
+        };
+        options.headers["Content-Type"] = "application/json";
+        options.headers["Authorization"] = "Basic " + token;
+        fetch("http://localhost:9090/apiv2/items/" + row.uuid, options).then(data => 
+            data.json().then(json => {
+                console.log(json); 
+            }));
+        setStatus(status);
     }
 
     function handleEdit() {
@@ -74,13 +88,13 @@ function ItemsRow(props) {
         <td>{row.name}</td>
         <td>{row.message}</td>
         <td>
-            {row.status === 0 && 
+            {status === 0 && 
                 <Chip color="success" variant="solid" onClick={() => handleSetStatus(1)}>Held</Chip>
             }
-            {row.status === 1 &&
+            {status === 1 &&
                 <Chip color="danger" variant="solid" onClick={() => handleSetStatus(0)}>Lost</Chip>
             }
-            {row.status === 2 &&
+            {status === 2 &&
                 <Chip color="warning" variant="solid" onClick={() => handleSetStatus(0)}>Found</Chip>
             }
         </td>
@@ -112,11 +126,11 @@ function ItemsRow(props) {
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                     >
-                        <div style={{ ml: '350px', pointerEvents: 'none' }}>
+                        <div style={{ marginLeft: '350px', pointerEvents: 'none' }}>
                             <Sheet sx={{
                                 width: '30vw',
                                 mx: 'auto',
-                                mt: 10,
+                                mt: 30,
                                 borderRadius: 10,
                                 pb: 2,
                                 pointerEvents: 'auto'
@@ -128,7 +142,7 @@ function ItemsRow(props) {
                                         color: 'black',
                                         textAlign: 'center'
                                     }}>
-                                        Edit {row.name}
+                                        Edit: {row.name}
                                     </Typography>
                                     <FormControl sx={{
                                         width: '80%',
@@ -189,24 +203,27 @@ function ItemsRow(props) {
                         aria-describedby="modal-modal-description"
                     >
                         <div style={{ 
-                            ml: "350px",
+                            display: 'flex',
+                            marginLeft: "350px",
+                            width: 'calc(100% - 350px)',
                             pointerEvents: "none"
                         }}>
                             <Sheet sx={{
                                 display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                width: '10vw',
-                                height: '10vw',
+                                width: 200,
+                                height: 200,
+                                mt: 'calc(50vh - 200px)',
                                 mx: 'auto',
-                                borderRadius: 10,
-                                pointerEvents: 'auto'
+                                pointerEvents: 'auto',
+                                borderRadius: 10
                             }}>
-                                <QRCodeSVG value={ "http://localhost:3000/found/" + row.uuid } sx={{
-                                    width: '100%',
-                                    height: '100%'
-                                }}/>
-                            </Sheet>
+                                <QRCodeSVG value={ "http://localhost:3000/found/" + row.uuid } style={{
+                                    display: 'flex',
+                                    width: '90%',
+                                    height: '90%',
+                                    margin: 'auto'
+                                }}/> 
+                            </Sheet>                            
                         </div>
                     </Modal>
                 </Stack>

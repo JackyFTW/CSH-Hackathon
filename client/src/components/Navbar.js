@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from 'react';
 import Sheet from '@mui/joy/Sheet';
 import Box from '@mui/system/Box';
 import List from '@mui/joy/List';
@@ -7,19 +8,36 @@ import ListItemDecorator from '@mui/joy/ListItemDecorator';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemContent from '@mui/joy/ListItemContent';
 import Card from '@mui/material/Card';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/joy/Button';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/joy/Typography';
+import useFetch from '../hooks/useFetch.js';
 
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-
 import './Navbar.css';
 
 function Navbar(props) {
+    const token = localStorage.getItem("token");
+
+    const [ email, setEmail ] = useState("example@gmail.com");
+
+    const { fetchMethod: fetchSelfUser, loading, data, error } = useFetch("http://localhost:9090/apiv2/users", "GET", {}, token);
+
+    let mounted = useRef(false);
+    useEffect(() => {
+        if(mounted.current) return;
+        fetchSelfUser();
+        mounted.current = true;
+    }, []);
+    useEffect(() => {
+        if(data !== null) {
+            setEmail(data.user.email);
+        }
+        mounted.current = true;
+    }, [loading, data, error]);
+
     return (
         <div>
             <Sheet
@@ -41,7 +59,7 @@ function Navbar(props) {
                     pt: 3
                 }}>
                     <img src={process.env.PUBLIC_URL + '/images/logo.png'} alt="logo" style={{
-                        width: '200px'
+                        width: '250px'
                     }}></img>
                 </Box>
                 <Divider/>
@@ -77,8 +95,7 @@ function Navbar(props) {
                         <Typography sx={{
                             color: 'black',
                             margin: 4
-                        }}>
-                            Username
+                        }}>{email}
                         </Typography>
                     </Button>
                 </Card>

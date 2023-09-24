@@ -7,7 +7,7 @@ function NotificationsRow(props) {
         <tr key={row.name} style={{
             textAlign: 'center'
         }}>
-            <td>{row.time}</td>
+            <td>{ new Date(row.time).toLocaleString() }</td>
             <td>{row.message}</td>
             <td>
                 {row.status === 0 &&

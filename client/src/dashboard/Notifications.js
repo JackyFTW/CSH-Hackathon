@@ -28,15 +28,29 @@ function Notifications() {
             let newRows = [];
             data.notifs.forEach(n => {
                 newRows.push({
+                    uuid: n.uuid,
                     time: n.time,
                     message: n.message,
                     status: n.status
                 });
             });
+            newRows.reverse();
             setRows(newRows);
 
-            newRows.forEach(r => {
-                // TODO: filter those unread and set as read
+            newRows.filter(r => r.status === 0).forEach(r => {
+                let options = { 
+                    method: "PATCH",
+                    headers: {},
+                    body: JSON.stringify({
+                        status: 1
+                    })
+                };
+                options.headers["Content-Type"] = "application/json";
+                options.headers["Authorization"] = "Basic " + token;
+                fetch("http://localhost:9090/apiv2/notifications/" + r.uuid, options).then(data => 
+                    data.json().then(json => {
+                        console.log(json); 
+                    }));
             });
         }
     }, [loading, data, error]);

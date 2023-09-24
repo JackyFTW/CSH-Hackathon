@@ -116,7 +116,7 @@ function Items() {
                     <Sheet sx={{
                         width: '30vw',
                         mx: 'auto',
-                        mt: 10,
+                        mt: 'calc(25vh)',
                         borderRadius: 10,
                         pb: 2,
                         pointerEvents: 'auto'

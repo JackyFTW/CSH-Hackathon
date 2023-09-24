@@ -4,6 +4,11 @@ import Items from './Items'
 import Notifications from './Notifications'
 
 function Dashboard(props) {
+    if(localStorage.getItem("token") === null) {
+        window.location.href = "/";
+        return;
+    }
+
     let content;
     if(props.page === "dashboard") {
         content = <Items/>;
