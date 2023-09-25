@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
-const db = require('../db.js');
+const db = require('../util/db');
 
 let accessTokens = []
 
@@ -28,11 +28,10 @@ async function auth(req, res) {
     let email = req.body.email;
     let password = req.body.password;
 
-    let success = false;
     let user = null;
+    let success = false;
     if(await db.userExists(email)) {
         user = await db.getUser(email);
-        
         success = await bcrypt.compare(password, user.password);
     }
 
@@ -62,8 +61,8 @@ async function getSelfUser(uuid, res) {
 }
 
 module.exports = {
-    accessTokens: accessTokens,
-    createUser: createUser,
-    auth: auth,
-    getSelfUser: getSelfUser
-}
+    accessTokens,
+    createUser,
+    auth,
+    getSelfUser
+};

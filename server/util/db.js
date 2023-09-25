@@ -111,18 +111,8 @@ async function getNotif(uuid) {
 }
 
 module.exports = {
-    init: init,
-    insertUser: insertUser,
-    getUser: getUser,
-    getUserByUuid: getUserByUuid,
-    userExists: userExists,
-    insertItem: insertItem,
-    updateItem: updateItem,
-    deleteItem: deleteItem,
-    getAllItems: getAllItems,
-    getItem: getItem,
-    insertNotif: insertNotif,
-    updateNotif: updateNotif,
-    getAllNotifs: getAllNotifs,
-    getNotif: getNotif
-}
+    init,
+    insertUser, getUser, getUserByUuid, userExists,
+    insertItem, updateItem, deleteItem, getAllItems, getItem,
+    insertNotif, updateNotif, getAllNotifs, getNotif
+};

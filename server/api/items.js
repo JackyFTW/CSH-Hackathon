@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
-const db = require('../db.js');
-const users = require('./users.js');
+
+const globals = require('../util/globals');
+const db = require('../util/db');
 
 async function createItem(uuid, req, res) {
     let item = req.body;
@@ -26,10 +27,7 @@ async function editItem(uuid, req, res) {
     }
 
     if(uuid !== item.userUuid) {
-        res.status(401).json({
-            status: 401,
-            error: "Unauthorized request"
-        });
+        globals.sendUnauthorized(res);
         return;
     }
 
@@ -54,10 +52,7 @@ async function deleteItem(uuid, req, res) {
     }
 
     if(uuid !== item.userUuid) {
-        res.status(401).json({
-            status: 401,
-            error: "Unauthorized request"
-        });
+        globals.sendUnauthorized(res);
         return;
     }
 
@@ -81,13 +76,13 @@ async function getItem(uuid, req, res) {
     let item = await db.getItem(req.params.uuid);
 
     if(uuid === item.userUuid || item.status === 1) {
-        // Get all data
+        // Owns the item
         res.status(200).json({
             status: 200,
             item: item
         });
     } else {
-        // Check if found
+        // Does not own the item
         res.status(200).json({
             status: 200,
             item: {
@@ -98,9 +93,9 @@ async function getItem(uuid, req, res) {
 }
 
 module.exports = {
-    createItem: createItem,
-    editItem: editItem,
-    deleteItem: deleteItem,
-    getSelfItems: getSelfItems,
-    getItem: getItem
-}
+    createItem,
+    editItem,
+    deleteItem,
+    getSelfItems,
+    getItem
+};

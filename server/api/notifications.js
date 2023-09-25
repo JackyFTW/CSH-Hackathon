@@ -1,5 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
-const db = require('../db.js');
+
+const globals = require('../util/globals');
+const db = require('../util/db');
 
 async function createNotif(req, res) {
     let item = await db.getItem(req.body.itemUuid);
@@ -15,7 +17,7 @@ async function createNotif(req, res) {
     if(item.status !== 1) {
         res.status(403).json({
             status: 403,
-            error: "Forbidden request, item not lost"
+            error: "Item not lost"
         });
         return;
     }
@@ -49,10 +51,7 @@ async function editNotif(uuid, req, res) {
     }
 
     if(uuid !== notif.userUuid) {
-        req.status(401).json({
-            status: 401,
-            error: "Unauthorized request"
-        });
+        globals.sendUnauthorized(res);
         return;
     }
 
@@ -75,7 +74,7 @@ async function getSelfNotifs(uuid, res) {
 }
 
 module.exports = {
-    createNotif: createNotif,
-    editNotif: editNotif,
-    getSelfNotifs: getSelfNotifs
-}
+    createNotif,
+    editNotif,
+    getSelfNotifs
+};
