@@ -11,6 +11,7 @@ import Card from '@mui/material/Card';
 import Button from '@mui/joy/Button';
 import Typography from '@mui/joy/Typography';
 import useFetch from '../hooks/useFetch.js';
+import BACKEND_ADDRESS from '../index.js';
 
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import NotificationsIcon from '@mui/icons-material/Notifications';
@@ -23,7 +24,7 @@ function Navbar(props) {
 
     const [ email, setEmail ] = useState("example@gmail.com");
 
-    const { fetchMethod: fetchSelfUser, loading, data, error } = useFetch("http://localhost:9090/apiv2/users", "GET", {}, token);
+    const { fetchMethod: fetchSelfUser, loading, data, error } = useFetch(BACKEND_ADDRESS + "/users", "GET", {}, token);
 
     let mounted = useRef(false);
     useEffect(() => {

@@ -6,6 +6,8 @@ import Login from './login/Login';
 import Register from './register/Register';
 import Found from './found/Found';
 
+const BACKEND_ADDRESS = "https://jackb.dev/apiv2"
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
@@ -18,3 +20,5 @@ root.render(
       </Routes>
     </BrowserRouter>
 );
+
+export default { BACKEND_ADDRESS }

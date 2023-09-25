@@ -10,12 +10,13 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsRow from './NotificationsRow.js';
 import useFetch from '../hooks/useFetch.js';
+import BACKEND_ADDRESS from '../index.js';
 
 function Notifications() {
     let token = localStorage.getItem("token");
 
     const [ rows, setRows ] = useState([]);
-    const { fetchMethod: fetchNotifs, loading, data, error } = useFetch("http://localhost:9090/apiv2/notifications", "GET", {}, token);
+    const { fetchMethod: fetchNotifs, loading, data, error } = useFetch(BACKEND_ADDRESS + "/notifications", "GET", {}, token);
 
     let mounted = useRef(false);
     useEffect(() => {
@@ -47,7 +48,7 @@ function Notifications() {
                 };
                 options.headers["Content-Type"] = "application/json";
                 options.headers["Authorization"] = "Basic " + token;
-                fetch("http://localhost:9090/apiv2/notifications/" + r.uuid, options).then(data => 
+                fetch(BACKEND_ADDRESS + "/notifications/" + r.uuid, options).then(data => 
                     data.json().then(json => {
                         console.log(json); 
                     }));

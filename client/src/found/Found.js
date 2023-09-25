@@ -12,6 +12,7 @@ import Modal from '@mui/material/Modal';
 import LinearProgress from '@mui/joy/LinearProgress';
 import Alert from '@mui/joy/Alert';
 import Check from '@mui/icons-material/Check';
+import BACKEND_ADDRESS from '../index.js';
 
 function Found() {
     let token = localStorage.getItem("token");
@@ -22,8 +23,8 @@ function Found() {
     const [ alert, setAlert ] = useState("");
     const handleOpenMessage = () => setOpenMessage(true);
     const handleCloseMessage = () => setOpenMessage(false);
-    const { fetchMethod: fetchItem, loading, data, error } = useFetch("http://localhost:9090/apiv2/items/" + uuid, "GET", {}, token);
-    const { fetchMethod: createNotif, loading: loading2, data: data2, error: error2 } = useFetch("http://localhost:9090/apiv2/notifications", "POST", {
+    const { fetchMethod: fetchItem, loading, data, error } = useFetch(BACKEND_ADDRESS + "/items/" + uuid, "GET", {}, token);
+    const { fetchMethod: createNotif, loading: loading2, data: data2, error: error2 } = useFetch(BACKEND_ADDRESS + "/notifications", "POST", {
         itemUuid: item.uuid
     }, null);
     

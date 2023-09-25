@@ -15,6 +15,7 @@ import QrCodeIcon from '@mui/icons-material/QrCode';
 import Chip from '@mui/joy/Chip';
 import useFetch from '../hooks/useFetch.js';
 import { QRCodeSVG } from 'qrcode.react';
+import BACKEND_ADDRESS from '../index.js';
 
 function ItemsRow(props) {
     const row = props.row;
@@ -29,11 +30,11 @@ function ItemsRow(props) {
     const handleCloseManage = () => setOpenManage(false);
     const handleOpenQR = () => setOpenQR(true);
     const handleCloseQR = () => setOpenQR(false);
-    const { fetchMethod: editItem, loading, data, error } = useFetch("http://localhost:9090/apiv2/items/" + row.uuid, "PATCH", {
+    const { fetchMethod: editItem, loading, data, error } = useFetch(BACKEND_ADDRESS + "/items/" + row.uuid, "PATCH", {
         name: name === "" ? row.name : name,
         message: message === "" ? row.message : message
     }, token);
-    const { fetchMethod: deleteItem, loading: loading2, data: data2, error: error2 } = useFetch("http://localhost:9090/apiv2/items/" + row.uuid, "DELETE", {}, token);
+    const { fetchMethod: deleteItem, loading: loading2, data: data2, error: error2 } = useFetch(BACKEND_ADDRESS + "/items/" + row.uuid, "DELETE", {}, token);
 
     const mounted = useRef(false);
     useEffect(() => {
@@ -54,7 +55,7 @@ function ItemsRow(props) {
         };
         options.headers["Content-Type"] = "application/json";
         options.headers["Authorization"] = "Basic " + token;
-        fetch("http://localhost:9090/apiv2/items/" + row.uuid, options).then(data => 
+        fetch(BACKEND_ADDRESS + "/items/" + row.uuid, options).then(data => 
             data.json().then(json => {
                 console.log(json); 
             }));
@@ -217,7 +218,7 @@ function ItemsRow(props) {
                                 pointerEvents: 'auto',
                                 borderRadius: 10
                             }}>
-                                <QRCodeSVG value={ "http://localhost:3000/found/" + row.uuid } style={{
+                                <QRCodeSVG value={ "https://jackb.dev/found/" + row.uuid } style={{
                                     display: 'flex',
                                     width: '90%',
                                     height: '90%',

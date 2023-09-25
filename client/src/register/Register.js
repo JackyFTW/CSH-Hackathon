@@ -7,6 +7,7 @@ import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 import Grid from '@mui/joy/Grid';
 import useFetch from '../hooks/useFetch.js'
+import BACKEND_ADDRESS from '../index.js';
 
 function Register() {
     const [ tip, setTip ] = useState("Please fill in the information to continue.");
@@ -15,7 +16,7 @@ function Register() {
     const [ email, setEmail ] = useState("");
     const [ phoneNumber, setPhoneNumber ] = useState("");
     const [ password, setPassword ] = useState("");
-    const { fetchMethod, loading, data, error } = useFetch("http://localhost:9090/apiv2/users", "POST", {
+    const { fetchMethod, loading, data, error } = useFetch(BACKEND_ADDRESS + "/apiv2/users", "POST", {
         email: email,
         firstName: firstName,
         lastName: lastName,

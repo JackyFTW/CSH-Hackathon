@@ -7,11 +7,12 @@ import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 import Link from '@mui/joy/Link';
 import useFetch from '../hooks/useFetch.js'
+import BACKEND_ADDRESS from '../index.js';
 
 function Login() {
 	const [ email, setEmail ] = useState("");
 	const [ password, setPassword ] = useState("");
-    const { fetchMethod, loading, data, error } = useFetch("http://localhost:9090/apiv2/users/auth", "POST", {
+    const { fetchMethod, loading, data, error } = useFetch(BACKEND_ADDRESS + "/apiv2/users/auth", "POST", {
         email: email,
 		password: password
     }, null);
