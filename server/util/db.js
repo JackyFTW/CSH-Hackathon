@@ -1,29 +1,30 @@
+const sqlite = require('promised-sqlite3');
 let db = null;
 
-function init() {
-    db = require('better-sqlite3')('data.db');
-    createTables();
+async function init() {
+    db = await sqlite.AsyncDatabase.open('./data.db');
+    await createTables();
 }
 
-function createTables() {
-    db.prepare("CREATE TABLE IF NOT EXISTS users (" +
+async function createTables() {
+    await db.run("CREATE TABLE IF NOT EXISTS users (" +
         "uuid VARCHAR(64) PRIMARY KEY," +
         "email VARCHAR(64)," +
         "json TEXT" +
-    ")").run();
+    ")");
 
-    db.prepare("CREATE TABLE IF NOT EXISTS items (" +
+    await db.run("CREATE TABLE IF NOT EXISTS items (" +
         "uuid VARCHAR(64) PRIMARY KEY," +
         "user_uuid VARCHAR(64)," +
         "json TEXT" +
-    ")").run();
+    ")");
 
-    db.prepare("CREATE TABLE IF NOT EXISTS notifications (" +
+    await db.run("CREATE TABLE IF NOT EXISTS notifications (" +
         "uuid VARCHAR(64) PRIMARY KEY, " +
         "user_uuid VARCHAR(64)," +
         "item_uuid VARCHAR(64), " +
         "json TEXT" +
-    ")").run();
+    ")");
 }
 
 /*
