@@ -16,8 +16,8 @@ app.use('/users', users);
 app.use('/items', items);
 app.use('/notifications', notifs)
 
-async function start() {
-    await db.init();
+function start() {
+    db.init();
     app.listen(9090, async () => {
         console.log(`Listening for requests...`);
     });
