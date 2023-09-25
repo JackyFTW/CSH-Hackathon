@@ -1,11 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const db = require('./db.js')
+const db = require('./db.js');
 const users = require('./api/users.js');
 const items = require('./api/items.js');
 const notifs = require('./api/notifications.js');
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
 const jsonParser = bodyParser.json();
 
 // Users Endpoint
