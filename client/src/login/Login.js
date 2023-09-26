@@ -12,7 +12,7 @@ import BACKEND_ADDRESS from '../index.js';
 function Login() {
 	const [ email, setEmail ] = useState("");
 	const [ password, setPassword ] = useState("");
-    const { fetchMethod, loading, data, error } = useFetch(BACKEND_ADDRESS + "/apiv2/users/auth", "POST", {
+    const { fetchMethod, loading, data, error } = useFetch(BACKEND_ADDRESS + "/users/auth", "POST", {
         email: email,
 		password: password
     }, null);

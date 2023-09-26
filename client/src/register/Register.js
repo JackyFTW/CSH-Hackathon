@@ -16,7 +16,7 @@ function Register() {
     const [ email, setEmail ] = useState("");
     const [ phoneNumber, setPhoneNumber ] = useState("");
     const [ password, setPassword ] = useState("");
-    const { fetchMethod, loading, data, error } = useFetch(BACKEND_ADDRESS + "/apiv2/users", "POST", {
+    const { fetchMethod, loading, data, error } = useFetch(BACKEND_ADDRESS + "/users", "POST", {
         email: email,
         firstName: firstName,
         lastName: lastName,
