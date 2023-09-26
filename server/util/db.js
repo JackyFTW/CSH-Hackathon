@@ -3,7 +3,7 @@ const sqlite = require('promised-sqlite3');
 let db = null;
 
 async function init() {
-    db = await sqlite.AsyncDatabase.open('./data/data.db');
+    db = await sqlite.AsyncDatabase.open('/home/servers/PublicEye/server/data/data.db');
     await createTables();
 }
 
