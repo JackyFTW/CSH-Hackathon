@@ -1,7 +1,7 @@
 const express = require('express');
-const db = require('./util/db');
 const app = express();
 
+const db = require('./util/db');
 const users = require('./routes/usersRoute');
 const items = require('./routes/itemsRoute');
 const notifs = require('./routes/notificationsRoute');

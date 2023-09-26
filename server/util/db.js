@@ -1,4 +1,5 @@
 const sqlite = require('promised-sqlite3');
+
 let db = null;
 
 async function init() {
