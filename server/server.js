@@ -12,9 +12,9 @@ app.use((req, res, next) => {
 })
 
 // Routes
-app.use('/users', users);
-app.use('/items', items);
-app.use('/notifications', notifs)
+app.use('/apiv2/users', users);
+app.use('/apiv2/items', items);
+app.use('/apiv2/notifications', notifs)
 
 async function start() {
     await db.init();
