@@ -1,2 +1,5 @@
 node_modules/
-data.db
+data/data.db
+start.sh
+Dockerfile
+.dockerignore
