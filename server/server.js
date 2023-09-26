@@ -6,11 +6,6 @@ const users = require('./routes/usersRoute');
 const items = require('./routes/itemsRoute');
 const notifs = require('./routes/notificationsRoute');
 
-app.use((req, res, next) => {
-    console.log(req);
-    next();
-})
-
 // Routes
 app.use('/apiv2/users', users);
 app.use('/apiv2/items', items);
