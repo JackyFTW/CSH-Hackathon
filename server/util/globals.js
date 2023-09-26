@@ -1,3 +1,5 @@
+const users = require('../api/users');
+
 function getUserUuid(req, res, error=true) {
     if(req.headers["authorization"] === undefined) {
         if(error) sendUnauthorized(res);
