@@ -21,4 +21,4 @@ root.render(
     </BrowserRouter>
 );
 
-export default { BACKEND_ADDRESS }
+export default BACKEND_ADDRESS
