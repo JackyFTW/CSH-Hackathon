@@ -75,6 +75,14 @@ async function getSelfItems(uuid, res) {
 async function getItem(uuid, req, res) {
     let item = await db.getItem(req.params.uuid);
 
+    if(item === null) {
+        res.status(404).json({
+            status: 404,
+            error: "Item does not exist"
+        });
+        return;
+    }
+
     if(uuid === item.userUuid || item.status === 1) {
         // Owns the item
         res.status(200).json({

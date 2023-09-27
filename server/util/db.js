@@ -93,7 +93,6 @@ async function insertNotif(json) {
 }
 
 async function updateNotif(uuid, json) {
-    console.log(json);
     await db.run("UPDATE notifications SET json = ? WHERE uuid = ?", [JSON.stringify(json), uuid]);
 }
 
