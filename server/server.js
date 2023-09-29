@@ -1,10 +1,13 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 
 const db = require('./util/db');
 const users = require('./routes/usersRoute');
 const items = require('./routes/itemsRoute');
 const notifs = require('./routes/notificationsRoute');
+
+app.use(cors());
 
 // Routes
 app.use('/apiv2/users', users);
