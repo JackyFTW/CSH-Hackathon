@@ -1,0 +1,168 @@
+@font-face {
+    font-family: "Gabarito";
+    src: url(../../public/fonts/Gabarito-VariableFont_wght.ttf);
+}
+@font-face {
+    font-family: Gemunu;
+    src: url(../../public/fonts/GemunuLibre-VariableFont_wght.ttf);
+}
+
+body {
+    background-color: rgb(220, 231, 255);
+}
+
+@media only screen and (min-width: 1401px) {
+    .log-in {
+        margin-top: 10vh !important;
+        margin-bottom: 8vh !important;    
+    }
+    .container {
+        width: 60vw !important;
+    }
+    .submit {
+        margin-top: 6vh !important;
+        margin-bottom: 8vh !important;
+        font-size: 1.3rem !important;    
+    }
+    .input {
+        font-size: 1rem !important;
+    }
+    .no {
+        font-size: 1rem !important;
+    }
+}
+@media only screen and (max-width: 1400px) {
+    .log-in {
+        margin-top: 10vh !important;
+        margin-bottom: 8vh !important;    
+    }
+    .submit {
+        margin-top: 6vh !important;
+        margin-bottom: 8vh !important;
+        font-size: 1.3rem !important;
+    }
+    .input {
+        font-size: 1rem !important;
+    }
+    .no {
+        font-size: 1rem !important;
+    }
+}
+@media only screen and (max-width: 1200px) {
+    .container {
+        width: 70vw !important;
+    }
+    .no {
+        font-size: 0.8rem !important;
+    }
+}
+@media only screen and (max-width: 992px) {
+    .container {
+        flex-direction: column !important;
+        height: 85vh !important;
+    }
+    .box {
+        width: 100% !important;
+    }
+    .log-in {
+        margin-top: 8vh !important;
+        margin-bottom: 6vh !important;
+    }
+    .input {
+        font-size: 1.7rem !important;
+    }
+    .no {
+        font-size: 1.3rem !important;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .container {
+        width: 90vw !important;
+        height: 85vh !important;
+    }
+}
+@media only screen and (max-width: 576px) {
+    .log-in {
+        margin-top: 6vh !important;
+        margin-bottom: 4vh !important;
+    }
+    .submit {
+        margin-top: 3vh !important;
+        margin-bottom: 4vh !important;
+        font-size: 1rem !important;
+    }
+    .input {
+        font-size: 1rem !important;
+    }
+    .no {
+        font-size: 0.8rem !important;
+    }
+}
+@media only screen and (max-width: 300px) {
+    .container {
+        width: 90vw !important;
+        height: 85vh !important;
+        flex-direction: column !important;
+    }
+    .box {
+        width: 100% !important;
+    }
+    .input {
+        font-size: 0.8rem !important;
+    }
+    .submit {
+        font-size: 0.8rem !important;
+    }
+    .no {
+        font-size: 0.7rem !important;
+    }
+}
+
+.container {
+    transition: ease-in-out 0.2s;
+    display: flex;
+    width: 50vw;
+    height: 80vh;
+    flex-direction: row;
+    margin: auto;
+    border-radius: 4vh;
+    top: 50%;
+    transform: translate(0%, -50%);
+    background: linear-gradient(rgb(37, 84, 196), rgb(53, 116, 200));
+}
+
+.box {
+    height: 100%;
+    width: 50%;
+}
+
+.right {
+    display: flex;
+    background-color: white !important;
+    border-radius: 4vh;
+    flex-direction: column;
+    align-items: center;
+}   
+
+.log-in {
+    font-size: 4rem !important;
+    font-family: Gabarito !important;
+    font-weight: bold !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.input {
+    width: 65% !important;
+    height: 7vh;
+    margin-bottom: 3vh;
+}
+
+.submit {
+    width: 65%;
+    padding: 2vh !important;
+}
+
+.no {
+    margin-bottom: 1.5vh !important;
+}

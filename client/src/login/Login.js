@@ -8,6 +8,9 @@ import Button from '@mui/joy/Button';
 import Link from '@mui/joy/Link';
 import useFetch from '../hooks/useFetch.js'
 import BACKEND_ADDRESS from '../index.js';
+import Card from '@mui/joy/Card';
+
+import './Login.css';
 
 function Login() {
 	const [ email, setEmail ] = useState("");
@@ -30,71 +33,31 @@ function Login() {
 	}
 
     return (
-        <Sheet
-            sx={{
-                width: 600,
-                mx: 'auto',
-                my: 10,
-                py: 3,
-                px: 3,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 2,
-                borderRadius: 'lg',
-                boxShadow: 'md',
-            }}
-        	variant="outlined"
-		>
-            <div style={{
-                width: '65%',
-                aspectRatio: '2374/414',
-                marginLeft: 'auto',
-                marginRight: 'auto'
-                }}> 
-                <img alt="logo" src="/images/logo.png" style={{
-                    width: '100%',
-                    height: '100%'
-                }}/>
-            </div>
-			<form onSubmit={(e) => handleSubmit(e)}>
-				<FormControl sx={{ mb: 4 }}>
-            		<FormLabel sx={{fontSize: 'lg'}}>Email</FormLabel>
-            		<Input
-              			name="email"
-              			type="email"
-              			placeholder="example@gmail.com"
-						onChange={(e) => setEmail(e.target.value)}
-            		/>
-          		</FormControl>
-          		<FormControl>
-            		<FormLabel sx = {{fontSize: 'lg'}}>Password</FormLabel>
-            		<Input
-              			name="password"
-              			type="password"
-              			placeholder="Type password..."
-						onChange={(e) => setPassword(e.target.value)}
-            		/>
-          		</FormControl>
+        <Sheet color="primary" className="container">
+			<div className="left box">
 
-         		<Button type="submit" sx={{ 
-                    display: 'flex',
-            		mx: 'auto',
-            		my: 2,
-            		width: 150,
-            		height: 70,
-            		fontSize: 'lg'
-            	}}>Log in
-                </Button>
+			</div>
+			<form className="right box" onSubmit={(e) => handleSubmit(e)}>
+				<Typography className="log-in">Login</Typography>
 
-          		<Typography
-            		endDecorator={<Link href="/register">Sign up</Link>}
-            		fontSize="sm"
-            		sx={{ 
-                        display: 'flex',
-                        justifyContent: 'center'
-        			}}>Don&apos;t have an account?
-                </Typography>		
+				<Input 
+					className="input" 
+					variant="soft" 
+					color="neutral"
+					placeholder="Email address"
+				></Input>
+				<Input 
+					className="input" 
+					variant="soft" 
+					color="neutral"
+					placeholder="Password"
+				></Input>
+
+				<Button className="submit">Submit</Button>
+				<Typography className="no">Forgot Password?</Typography>
+				<Typography className="no">Don't have an account? Register here</Typography>
 			</form>
+			
         </Sheet>
     );
 }
