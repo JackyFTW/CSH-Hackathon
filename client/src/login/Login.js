@@ -35,7 +35,10 @@ function Login() {
     return (
         <Sheet color="primary" className="container">
 			<div className="left box">
-
+				<div className="logo-holder">
+					<img className="logo" src="/images/logo.png"></img>
+					<Typography className="logo-words">Public Eye</Typography>
+				</div>
 			</div>
 			<form className="right box" onSubmit={(e) => handleSubmit(e)}>
 				<Typography className="log-in">Login</Typography>

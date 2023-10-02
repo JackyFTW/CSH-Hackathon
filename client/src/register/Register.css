@@ -7,6 +7,10 @@
     src: url(../../public/fonts/GemunuLibre-VariableFont_wght.ttf);
 }
 
+body {
+    background-color: rgb(220, 231, 255);
+}
+
 @media only screen and (min-width: 1401px) {
     .log-in {
         margin-top: 10vh !important;
@@ -114,7 +118,7 @@
     }
 }
 
-/* RIGHT BOX */
+/* left BOX */
 
 .container {
     transition: ease-in-out 0.2s;
@@ -134,8 +138,9 @@
     width: 50%;
 }
 
-.right {
+.left {
     display: flex;
+    background-color: white !important;
     border-radius: 4vh;
     flex-direction: column;
     align-items: center;
@@ -145,8 +150,8 @@
     font-size: 4rem !important;
     font-family: Gabarito !important;
     font-weight: bold !important;
-    margin-left: auto !important;
     margin-right: auto !important;
+    margin-left: auto !important;
 }
 
 .input {
@@ -165,9 +170,9 @@
 }
 
 
-/* LEFT BOX */
+/* right BOX */
 
-.left {
+.right {
     display: flex;
     flex-direction: column;
 }
