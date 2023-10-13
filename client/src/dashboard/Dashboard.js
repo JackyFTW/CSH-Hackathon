@@ -5,7 +5,7 @@ import Notifications from './Notifications'
 
 function Dashboard(props) {
     if(localStorage.getItem("token") === null) {
-        window.location.href = "/";
+        window.location.href = "/login";
         return;
     }
 

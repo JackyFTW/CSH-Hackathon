@@ -8,10 +8,6 @@
 }
 
 @media only screen and (min-width: 1401px) {
-    .log-in {
-        margin-top: 10vh !important;
-        margin-bottom: 8vh !important;    
-    }
     .container {
         width: 60vw !important;
     }
@@ -23,15 +19,15 @@
     .input {
         font-size: 1rem !important;
     }
+    .title {
+        margin-top: 10vh !important;
+        margin-bottom: 8vh !important;    
+    }
     .no {
         font-size: 1rem !important;
     }
 }
 @media only screen and (max-width: 1400px) {
-    .log-in {
-        margin-top: 10vh !important;
-        margin-bottom: 8vh !important;    
-    }
     .submit {
         margin-top: 6vh !important;
         margin-bottom: 8vh !important;
@@ -39,6 +35,10 @@
     }
     .input {
         font-size: 1rem !important;
+    }
+    .title {
+        margin-top: 10vh !important;
+        margin-bottom: 8vh !important;    
     }
     .no {
         font-size: 1rem !important;
@@ -60,12 +60,12 @@
     .box {
         width: 100% !important;
     }
-    .log-in {
-        margin-top: 8vh !important;
-        margin-bottom: 6vh !important;
-    }
     .input {
         font-size: 1.7rem !important;
+    }
+    .title {
+        margin-top: 8vh !important;
+        margin-bottom: 6vh !important;
     }
     .no {
         font-size: 1.3rem !important;
@@ -78,10 +78,6 @@
     }
 }
 @media only screen and (max-width: 576px) {
-    .log-in {
-        margin-top: 6vh !important;
-        margin-bottom: 4vh !important;
-    }
     .submit {
         margin-top: 3vh !important;
         margin-bottom: 4vh !important;
@@ -89,6 +85,10 @@
     }
     .input {
         font-size: 1rem !important;
+    }
+    .title {
+        margin-top: 6vh !important;
+        margin-bottom: 4vh !important;
     }
     .no {
         font-size: 0.8rem !important;
@@ -114,8 +114,6 @@
     }
 }
 
-/* RIGHT BOX */
-
 .container {
     transition: ease-in-out 0.2s;
     display: flex;
@@ -126,7 +124,7 @@
     border-radius: 4vh;
     top: 50%;
     transform: translate(0%, -50%);
-    background: linear-gradient(rgb(37, 84, 196), rgb(53, 116, 200));
+    background: linear-gradient(rgb(37, 84, 196), rgb(68, 127, 204));
 }
 
 .box {
@@ -134,14 +132,23 @@
     width: 50%;
 }
 
+.no {
+    margin-bottom: 1.5vh !important;
+}
+
+
+
+/* RIGHT BOX */
+
 .right {
+    background-color: white;
     display: flex;
-    border-radius: 4vh;
+    border-radius: calc(4vh - 2px);
     flex-direction: column;
     align-items: center;
 }   
 
-.log-in {
+.title {
     font-size: 4rem !important;
     font-family: Gabarito !important;
     font-weight: bold !important;
@@ -159,11 +166,6 @@
     width: 65%;
     padding: 2vh !important;
 }
-
-.no {
-    margin-bottom: 1.5vh !important;
-}
-
 
 /* LEFT BOX */
 
@@ -194,8 +196,4 @@
     margin-top: auto !important;
     margin-bottom: auto !important;
     filter: drop-shadow(0.7vh 0.5vh black)
-}
-
-.description {
-    margin: 1vw;
 }
