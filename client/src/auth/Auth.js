@@ -1,8 +1,6 @@
-import { Routes, Route } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Sheet from '@mui/joy/Sheet';
 import Typography from '@mui/joy/Typography';
-import Login from './login/Login';
-import Register from './register/Register';
 
 import './Auth.css';
 
@@ -15,10 +13,7 @@ function Auth() {
 					<Typography className="logo-words">Public Eye</Typography>
 				</div>
 			</div>
-            <Routes>
-        	    <Route exact path="/login" element={<Login/>}/>	
-        	    <Route exact path="/register" element={<Register/>}/>
-      	    </Routes>
+            <Outlet/>
         </Sheet>
     );
 }
